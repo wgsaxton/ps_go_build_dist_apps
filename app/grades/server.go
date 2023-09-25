@@ -23,6 +23,7 @@ type studentsHandler struct{}
 // /students/{id}/grades - a single student's grades
 func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pathSegments := strings.Split(r.URL.Path, "/")
+	fmt.Println("Grading service: pathSegments:", pathSegments)
 	switch len(pathSegments) {
 	case 2:
 		sh.getAll(w, r)
@@ -34,7 +35,7 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		sh.getOne(w, r, id)
 	case 4:
-		id, err := strconv.Atoi(pathSegments[3])
+		id, err := strconv.Atoi(pathSegments[2])
 		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
@@ -43,10 +44,12 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	default:
 		w.WriteHeader(http.StatusNotFound)
 	}
+	fmt.Println("Grading service: End of ServeHTTP method")
 }
 
 func (sh studentsHandler) getAll(w http.ResponseWriter, r *http.Request) {
 	studentsMutex.Lock()
+	defer studentsMutex.Unlock()
 
 	data, err := sh.toJSON(students)
 	if err != nil {

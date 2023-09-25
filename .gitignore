@@ -1,0 +1,2 @@
+# Ignore the services built for testing
+/app/*service
