@@ -76,7 +76,7 @@ func (studentsHandler) renderStudents(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	fmt.Printf("%+v\n", s)
+	fmt.Printf("In (studentsHandler) renderStudents method\n%+v\n", s)
 
 	rootTemplate.Lookup("students.gohtml").Execute(w, s)
 }
