@@ -1,4 +1,6 @@
 # Dist Apps Makefile
+SHELL=/bin/bash
+GIT_TAG = $(shell git describe)
 
 all:
 
