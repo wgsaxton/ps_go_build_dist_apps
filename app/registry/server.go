@@ -174,12 +174,13 @@ var reg = registry{
 type RegistryService struct{}
 
 func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	log.Println("Request received")
+	log.Println(req.Body)
 	switch req.Method {
 	case http.MethodPost:
 		dec := json.NewDecoder(req.Body)
 		var r Registration
 		err := dec.Decode(&r)
+		fmt.Println("error 1: ", err)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
@@ -187,9 +188,12 @@ func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		}
 		log.Printf("Adding service: %v with URL: %v\n", r.ServiceName, r.ServiceURL)
 		err = reg.add(r)
+		fmt.Println("error 2: ", err)
 		if err != nil {
 			log.Println(err)
-			w.WriteHeader(http.StatusBadRequest)
+			// for troubleshooting
+			// w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusOK)
 			return
 		}
 	case http.MethodDelete:

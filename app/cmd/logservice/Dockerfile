@@ -6,8 +6,8 @@ WORKDIR /build
 # Download Go modules
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o logservice /app/cmd/logservice/*
+RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/logservice app/cmd/logservice/*.go
 
 EXPOSE 4000
 
-CMD ["/logservice"]
+CMD ["/bin/logservice"]

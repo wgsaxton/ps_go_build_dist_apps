@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/wgsaxton/ps_go_build_dist_apps/app/registry"
 )
@@ -24,10 +27,12 @@ func main() {
 		cancel()
 	}()
 
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, os.Interrupt, syscall.SIGTERM)
+
 	go func() {
-		fmt.Println("Registry service started. Press Return to stop.")
-		var s string
-		fmt.Scanln(&s)
+		fmt.Println("Registry service started. Press Ctl+c to stop.")
+		<-exit
 		srv.Shutdown(ctx)
 		cancel()
 	}()
