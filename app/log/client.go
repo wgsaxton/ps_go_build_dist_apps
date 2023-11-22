@@ -11,7 +11,8 @@ import (
 
 func SetClientLogger(serviceURL string, clientService registry.ServiceName) {
 	stlog.SetPrefix(fmt.Sprintf("[%v] - ", clientService))
-	stlog.SetFlags(0)
+	// stlog.SetFlags(0)
+	stlog.SetFlags(stlog.Lshortfile)
 	stlog.SetOutput(&clientLogger{url: serviceURL})
 }
 

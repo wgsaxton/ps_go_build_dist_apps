@@ -37,6 +37,7 @@ func RegisterService(r Registration) error {
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	fmt.Println(res.StatusCode)
 	fmt.Println(res.Status)
 	fmt.Println(res.Header)

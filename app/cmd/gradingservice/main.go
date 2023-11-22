@@ -33,6 +33,7 @@ func main() {
 	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
 		fmt.Printf("Logging service found at: %v\n", logProvider)
 		log.SetClientLogger(logProvider, r.ServiceName)
+		stlog.Println("hi")
 	}
 	<-ctx.Done()
 	fmt.Println("Shutting down grading service")
