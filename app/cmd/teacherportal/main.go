@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		stlog.Fatal(err)
 	}
-	host, port := "localhost", "5001"
+	host, port := "teacherportal.service", "5001"
 	serviceAddress := fmt.Sprintf("http://%v:%v", host, port)
 
 	var r registry.Registration

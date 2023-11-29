@@ -1,6 +1,8 @@
 package teacherportal
 
-import "html/template"
+import (
+	"html/template"
+)
 
 var rootTemplate *template.Template
 

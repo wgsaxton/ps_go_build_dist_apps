@@ -1,4 +1,4 @@
-FROM golang:1.20
+FROM --platform=linux/$TARGETARCH golang:1.20
 
 # Set destination for COPY
 WORKDIR /build
@@ -6,7 +6,7 @@ WORKDIR /build
 # Download Go modules
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/registryservice app/cmd/registryservice/*.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /bin/registryservice app/cmd/registryservice/*.go
 
 EXPOSE 3000
 
