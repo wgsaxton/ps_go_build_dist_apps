@@ -1,0 +1,19 @@
+FROM --platform=linux/$TARGETARCH golang:1.20 AS build
+
+# Set destination for COPY
+WORKDIR /build
+
+# Download Go modules
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /bin/gradingservice app/cmd/gradingservice/*.go
+
+FROM scratch
+
+LABEL org.opencontainers.image.source=https://github.com/wgsaxton/ps_go_build_dist_apps
+
+COPY --from=build /bin/gradingservice /bin/gradingservice
+
+EXPOSE 6000
+
+CMD ["/bin/gradingservice"]

@@ -1,0 +1,21 @@
+FROM --platform=linux/$TARGETARCH golang:1.20 AS build
+
+ARG TARGETARCH
+
+# Set destination for COPY
+WORKDIR /build
+
+# Download Go modules
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /bin/logservice app/cmd/logservice/*.go
+
+FROM scratch
+
+LABEL org.opencontainers.image.source=https://github.com/wgsaxton/ps_go_build_dist_apps
+
+COPY --from=build /bin/logservice /bin/logservice
+
+EXPOSE 4000
+
+CMD ["/bin/logservice"]
