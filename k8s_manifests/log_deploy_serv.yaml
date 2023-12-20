@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: log
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: log
+  template:
+    metadata:
+      labels:
+        service: log
+    spec:
+      containers:
+        - name: log
+          image: ghcr.io/wgsaxton/logservice:v0.04
+          ports:
+          - containerPort: 4000
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  
+  name: logservice
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: log
+spec:
+  type: ClusterIP
+  selector:
+    service: log
+  ports:
+  - port: 4000
+    targetPort: 4000

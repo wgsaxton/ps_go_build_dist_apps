@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gradebookapp
+  labels:
+    name: gradebookapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: registry
+  template:
+    metadata:
+      labels:
+        service: registry
+    spec:
+      containers:
+        - name: registry
+          image: ghcr.io/wgsaxton/registryservice:v0.04
+          ports:
+          - containerPort: 3000
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  
+  name: registryservice
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: registry
+spec:
+  type: ClusterIP
+  selector:
+    service: registry
+  ports:
+  - port: 3000
+    targetPort: 3000

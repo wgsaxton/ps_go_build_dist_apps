@@ -1,6 +1,7 @@
 package log
 
 import (
+	"fmt"
 	"io"
 	stlog "log"
 	"net/http"
@@ -36,5 +37,7 @@ func RegisterHandlers() {
 }
 
 func write(message string) {
+	fmt.Println("Printing what should be written to file:")
+	fmt.Printf("%v\n", message)
 	log.Printf("%v\n", message)
 }
