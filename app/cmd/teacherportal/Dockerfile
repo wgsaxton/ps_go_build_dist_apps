@@ -6,7 +6,7 @@ WORKDIR /build
 # Download Go modules
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /bin/teacherportalservice app/cmd/teacherportal/*.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o teacherportalservice app/cmd/teacherportal/*.go
 
 LABEL org.opencontainers.image.source=https://github.com/wgsaxton/ps_go_build_dist_apps
 
@@ -15,6 +15,9 @@ LABEL org.opencontainers.image.source=https://github.com/wgsaxton/ps_go_build_di
 # This is so the executable can find the templates
 COPY app/teacherportal/*.gohtml ./teacherportal/
 
+# Trying this to see if the binary can find the files on startup
+COPY app/teacherportal/*.gohtml /bin/teacherportal/
+
 EXPOSE 5001
 
-CMD ["/bin/teacherportalservice"]
+CMD ["/build/teacherportalservice"]
