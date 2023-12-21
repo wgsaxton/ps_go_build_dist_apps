@@ -31,6 +31,7 @@ build_containers: build_registryservice_container build_logservice_container bui
 build_binaries:
 	app/build.sh
 
+# Do prior: docker login ghcr.io --username wgsaxton
 push_to_registry:
 	docker push ghcr.io/wgsaxton/logservice:${GIT_TAG}
 	docker push ghcr.io/wgsaxton/registryservice:${GIT_TAG}

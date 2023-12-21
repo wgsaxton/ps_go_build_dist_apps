@@ -8,6 +8,8 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -o /bin/teacherportalservice app/cmd/teacherportal/*.go
 
+LABEL org.opencontainers.image.source=https://github.com/wgsaxton/ps_go_build_dist_apps
+
 # The executable will run from the WORKDIR and 
 # look for files starting from the WORKDIR location
 # This is so the executable can find the templates

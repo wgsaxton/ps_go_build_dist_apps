@@ -28,7 +28,7 @@ func RegisterService(r Registration) error {
 
 	buf := new(bytes.Buffer)
 	enc := json.NewEncoder(buf)
-	fmt.Printf("%+v\n", r)
+	fmt.Printf("Registration registry, client.go: %+v\n", r)
 	err = enc.Encode(r)
 	if err != nil {
 		return err
@@ -38,10 +38,8 @@ func RegisterService(r Registration) error {
 		return err
 	}
 	defer res.Body.Close()
-	fmt.Println(res.StatusCode)
-	fmt.Println(res.Status)
-	fmt.Println(res.Header)
-	fmt.Println(res.Body)
+	fmt.Println("Status: ", res.Status)
+	fmt.Println("Body: ", res.Body)
 	if res.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to register service. Registry service responded with code %v", res.StatusCode)
 	}

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: teacherportal
-          image: ghcr.io/wgsaxton/teacherportalservice:v0.04
+          image: ghcr.io/wgsaxton/teacherportalservice:v0.04.1
           ports:
           - containerPort: 5001
           resources:

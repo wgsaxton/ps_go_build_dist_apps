@@ -25,7 +25,7 @@ type studentsHandler struct{}
 
 func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pathSegments := strings.Split(r.URL.Path, "/")
-	fmt.Println(r.URL.Path, pathSegments, len(pathSegments))
+	fmt.Println("ServeHTTP teachersportal handlers.go: ", r.URL.Path, pathSegments, len(pathSegments))
 	switch len(pathSegments) {
 	case 2: // students
 		fmt.Println("Teacher Portal Handler: ServeHTTP method: case2")
