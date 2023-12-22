@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: registry
-          image: ghcr.io/wgsaxton/registryservice:v0.04
+          image: ghcr.io/wgsaxton/registryservice:v0.05
           ports:
           - containerPort: 3000
           resources:

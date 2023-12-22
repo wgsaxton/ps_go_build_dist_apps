@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"sync"
+	"time"
 )
 
 func RegisterService(r Registration) error {
@@ -19,20 +20,31 @@ func RegisterService(r Registration) error {
 	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
+	fmt.Println("registry/client.go: heartbeat handler started")
 	
 	serviceUpdateURL, err := url.Parse(r.ServiceUpdateURL)
 	if err != nil {
 		return err
 	}
+	// Start listening for the registry service response
+	// Telling the service what other services available
 	http.Handle(serviceUpdateURL.Path, &serviceUpdateHandler{})
+	fmt.Println("registry/client.go: services handler started")
 
 	buf := new(bytes.Buffer)
 	enc := json.NewEncoder(buf)
-	fmt.Printf("Registration registry, client.go: %+v\n", r)
+	fmt.Printf("Registration struct, registry/client.go: %+v\n", r)
 	err = enc.Encode(r)
 	if err != nil {
 		return err
 	}
+
+	// Give the handler above time to spin up, 5 seconds
+	// Registry couldn't send updates to the service before
+	time.Sleep(5 * time.Second)
+	log.Println("registry/client.go: sleeping 5 seconds")
+	
+	// Registers its service with the registry
 	res, err := http.Post(ServicesURL, "application/json", buf)
 	if err != nil {
 		return err

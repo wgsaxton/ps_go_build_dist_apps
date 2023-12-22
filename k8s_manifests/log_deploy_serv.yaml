@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: log
-          image: ghcr.io/wgsaxton/logservice:v0.04
+          image: ghcr.io/wgsaxton/logservice:v0.05
           ports:
           - containerPort: 4000
           resources:
