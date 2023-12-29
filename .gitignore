@@ -1,3 +1,4 @@
 # Ignore the services built for testing
 /app/*service
 app/app.log
+*.tgz
