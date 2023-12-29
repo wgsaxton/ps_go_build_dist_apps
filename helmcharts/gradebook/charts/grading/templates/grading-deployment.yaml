@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grading-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: grading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: grading
+  template:
+    metadata:
+      labels:
+        service: grading
+    spec:
+      containers:
+        - name: grading
+          image: ghcr.io/wgsaxton/gradingservice:{{ .Values.image.tag }}
+          ports:
+          - containerPort: 6000
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"

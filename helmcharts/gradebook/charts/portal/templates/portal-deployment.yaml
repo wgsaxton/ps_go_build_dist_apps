@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teacherportal-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: teacherportal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: teacherportal
+  template:
+    metadata:
+      labels:
+        service: teacherportal
+    spec:
+      containers:
+        - name: teacherportal
+          image: ghcr.io/wgsaxton/teacherportalservice:{{ .Values.image.tag }}
+          ports:
+          - containerPort: 5001
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"

@@ -1,0 +1,14 @@
+define: &tag "v0.05"
+
+registry:
+  image:
+    tag: *tag
+log:
+  image:
+    tag: *tag
+grading:
+  image:
+    tag: *tag
+teacherportal:
+  image:
+    tag: *tag

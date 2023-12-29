@@ -35,7 +35,7 @@ func main() {
 		port,
 		teacherportal.RegisterHandlers)
 	if err != nil {
-		stlog.Fatal()
+		stlog.Fatal(err)
 	}
 	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
 		log.SetClientLogger(logProvider, r.ServiceName)

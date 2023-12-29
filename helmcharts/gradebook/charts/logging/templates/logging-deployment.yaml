@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: log
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: log
+  template:
+    metadata:
+      labels:
+        service: log
+    spec:
+      containers:
+        - name: log
+          image: ghcr.io/wgsaxton/logservice:{{ .Values.image.tag }}
+          ports:
+          - containerPort: 4000
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"

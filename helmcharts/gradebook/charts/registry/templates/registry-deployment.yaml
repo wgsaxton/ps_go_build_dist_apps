@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-deployment
+  namespace: gradebookapp
+  labels:
+    app: gradebook
+    service: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: registry
+  template:
+    metadata:
+      labels:
+        service: registry
+    spec:
+      containers:
+        - name: registry
+          image: ghcr.io/wgsaxton/registryservice:{{ .Values.image.tag }}
+          ports:
+          - containerPort: 3000
+          resources:
+            limits:
+              memory: "256M"
+              cpu: "500m"
