@@ -37,3 +37,11 @@ push_to_registry:
 	docker push ghcr.io/wgsaxton/registryservice:${GIT_TAG}
 	docker push ghcr.io/wgsaxton/gradingservice:${GIT_TAG}
 	docker push ghcr.io/wgsaxton/teacherportalservice:${GIT_TAG}
+
+build_helm_chart:
+	pushd helmcharts/ && \
+	helm package ./gradebook && \
+	popd
+
+push_helm_chart:
+	helm push ./helmcharts/gradebook-* oci://ghcr.io/wgsaxton
