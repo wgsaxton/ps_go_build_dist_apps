@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  
   name: gradingservice
-  namespace: gradebookapp
   labels:
     app: gradebook
     service: grading
