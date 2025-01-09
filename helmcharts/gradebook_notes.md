@@ -33,6 +33,14 @@ helm install dev --version 0.1.0 oci://ghcr.io/wgsaxton/gradebook
 OR
 # must also --create-namespace if installing into a namespace that doesn't exist
 helm install dev --version 0.1.2 --namespace gstest --create-namespace oci://ghcr.io/wgsaxton/gradebook
+OR
+# Install from a local packaged chart. Useful for testing locally
+helm install dev --namespace gstest --create-namespace gradebook-0.1.2.tgz
+```
+
+Can run this pod in the namespace to do some testing
+```
+kubectl run -i --tty --rm -n gstest --image=nicolaka/netshoot --restart=Never netshoot -- sh
 ```
 
 To uninstall the helm chart.
