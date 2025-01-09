@@ -1,6 +1,14 @@
 # Creating Helm Chart Notes
 General notes on how to implement the helm chart
 
+## Creating the Helm Chart
+### Commands to create the chart/file
+See the Makefile section `package_helm_chart` for the commands
+
+### Process and commands to upload chart to the repository
+Using github's container registry since helm charts are OCI compliant
+
+
 ## Initial testing
 Initially I just cloned the repo and installed the helm chart that way
 ```
@@ -20,11 +28,16 @@ Now install the Helm chart
 ```
 helm upgrade --install dev oci://ghcr.io/wgsaxton/gradebook --version 0.1.0
 OR
+# will install in default namespace
 helm install dev --version 0.1.0 oci://ghcr.io/wgsaxton/gradebook
 OR
-helm install dev --version 0.1.1 --namespace gstest --create-namespace oci://ghcr.io/wgsaxton/gradebook
-OR
-helm install dev --version 0.1.2 --namespace gstest oci://ghcr.io/wgsaxton/gradebook
+# must also --create-namespace if installing into a namespace that doesn't exist
+helm install dev --version 0.1.2 --namespace gstest --create-namespace oci://ghcr.io/wgsaxton/gradebook
+```
+
+To uninstall the helm chart.
+```
+helm uninstall --namespace gstest dev
 ```
 
 So there's no searching the repo, etc. You have to go strait to the helm package and install it using the `helm upgrade/install` cmd noted above. No `helm repo add` option since I'm using github and not a container registry.
