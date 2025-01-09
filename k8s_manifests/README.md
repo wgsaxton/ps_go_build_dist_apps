@@ -31,4 +31,9 @@ kubectl run -i --tty -n gradebookapp --image=nicolaka/netshoot netshoot -- sh
 # then to resume
 kubectl attach netshoot -c netshoot -i -t -n gradebookapp
 ```
+## Using KIND locally on laptop
 
+If running the service locally (like in KIND), you can port forward to the service to reach it, like with a web browser
+```
+kubectl port-forward -n gstest services/teacherportalservice 8080:5001
+```
