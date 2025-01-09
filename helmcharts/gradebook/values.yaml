@@ -1,4 +1,4 @@
-define: &tag "v0.06"
+define: &tag "v0.07"
 
 registry:
   image:

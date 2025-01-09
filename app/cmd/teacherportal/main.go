@@ -38,7 +38,9 @@ func main() {
 		stlog.Fatal(err)
 	}
 	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
+		fmt.Printf("Logging service found at: %v\n", logProvider)
 		log.SetClientLogger(logProvider, r.ServiceName)
+		stlog.Printf("This is %s sending a log msg", host)
 	}
 	<-ctx.Done()
 	fmt.Println("Shutting down teacher portal")
