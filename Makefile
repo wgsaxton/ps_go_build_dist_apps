@@ -45,3 +45,15 @@ package_helm_chart:
 
 push_helm_chart:
 	helm push ./helmcharts/gradebook-* oci://ghcr.io/wgsaxton
+
+# If using KIND locally, need to load the images into the KIND docker node
+# cluster_name is the name of the kind cluster. Get the name by:
+# kind get clusters
+# Cmd: make load_kind_images cluster_name=my_cluster  // if cluster name is my_cluster
+
+cluster_name = "kind"
+load_kind_images:
+	kind load docker-image ghcr.io/wgsaxton/logservice:${GIT_TAG} --name $(cluster_name)
+	kind load docker-image ghcr.io/wgsaxton/registryservice:${GIT_TAG} --name $(cluster_name)
+	kind load docker-image ghcr.io/wgsaxton/gradingservice:${GIT_TAG} --name $(cluster_name)
+	kind load docker-image ghcr.io/wgsaxton/teacherportalservice:${GIT_TAG} --name $(cluster_name)

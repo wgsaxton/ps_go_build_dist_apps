@@ -13,6 +13,9 @@ import (
 )
 
 func main() {
+	// Set up logging format
+	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+	
 	registry.SetupRegistryService()
 
 	http.Handle("/services", &registry.RegistryService{})

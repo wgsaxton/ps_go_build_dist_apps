@@ -180,7 +180,7 @@ func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		dec := json.NewDecoder(req.Body)
 		var r Registration
 		err := dec.Decode(&r)
-		fmt.Println("registry/server.go error 1: ", err)
+		log.Println("registry/server.go error 1: ", err)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
@@ -188,7 +188,7 @@ func (s RegistryService) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		}
 		log.Printf("registry/server.go Adding service: %v with URL: %v\n", r.ServiceName, r.ServiceURL)
 		err = reg.add(r)
-		fmt.Println("registry/server.go error 2: ", err)
+		log.Println("registry/server.go error 2: ", err)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)

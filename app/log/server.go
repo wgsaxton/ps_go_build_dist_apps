@@ -22,7 +22,7 @@ func (fl fileLog) Write(data []byte) (int, error) {
 }
 
 func Run(destination string) {
-	log = stlog.New(fileLog(destination), "", stlog.LstdFlags)
+	log = stlog.New(fileLog(destination), "", stlog.Ldate | stlog.Lmicroseconds)
 }
 
 func RegisterHandlers() {
@@ -38,6 +38,6 @@ func RegisterHandlers() {
 
 func write(message string) {
 	fmt.Println("Printing what should be written to file:")
-	fmt.Printf("%v\n", message)
-	log.Printf("%v\n", message)
+	fmt.Printf("%v", message)
+	log.Printf("%v", message)
 }

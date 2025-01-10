@@ -25,10 +25,10 @@ type studentsHandler struct{}
 
 func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pathSegments := strings.Split(r.URL.Path, "/")
-	fmt.Println("ServeHTTP teachersportal handlers.go: ", r.URL.Path, pathSegments, len(pathSegments))
+	log.Printf("ServeHTTP func r.URL.Path: %s, pathSegments: %v, segment length: %d", r.URL.Path, pathSegments, len(pathSegments))
 	switch len(pathSegments) {
 	case 2: // students
-		fmt.Println("Teacher Portal Handler: ServeHTTP method: case2")
+		log.Println("Teacher Portal Handler: ServeHTTP method: case2")
 		sh.renderStudents(w, r)
 	case 3: // /students/{:id}
 		id, err := strconv.Atoi(pathSegments[2])
@@ -36,7 +36,7 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
-		fmt.Println("Student ID:", id)
+		log.Println("Student ID:", id)
 		sh.renderStudent(w, r, id)
 	case 4: // /students/{:id}/grades
 		id, err := strconv.Atoi(pathSegments[2])
@@ -76,7 +76,6 @@ func (studentsHandler) renderStudents(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	fmt.Printf("In (studentsHandler) renderStudents method\n%+v\n", s)
 
 	rootTemplate.Lookup("students.gohtml").Execute(w, s)
 }
@@ -98,15 +97,15 @@ func (studentsHandler) renderStudent(w http.ResponseWriter, r *http.Request, id 
 	if err != nil {
 		return
 	}
-	fmt.Println("serviceURL:", serviceURL)
-	fmt.Println("response:", res.Body)
+	log.Println("serviceURL:", serviceURL)
+	log.Println("response:", res.Body)
 
 	var s grades.Student
 	err = json.NewDecoder(res.Body).Decode(&s)
 	if err != nil {
 		return
 	}
-	fmt.Printf("%+v\n", s)
+	log.Printf("Student struct: %+v\n", s)
 
 	rootTemplate.Lookup("student.gohtml").Execute(w, s)
 }

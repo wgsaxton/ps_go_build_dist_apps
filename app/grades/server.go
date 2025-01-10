@@ -23,7 +23,7 @@ type studentsHandler struct{}
 // /students/{id}/grades - a single student's grades
 func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pathSegments := strings.Split(r.URL.Path, "/")
-	fmt.Println("Grading service: pathSegments:", pathSegments)
+	log.Println("Grading service: pathSegments:", pathSegments)
 	switch len(pathSegments) {
 	case 2:
 		sh.getAll(w, r)
@@ -44,7 +44,7 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	default:
 		w.WriteHeader(http.StatusNotFound)
 	}
-	fmt.Println("Grading service: End of ServeHTTP method")
+	// (was for testing) log.Println("Grading service: End of ServeHTTP method")
 }
 
 func (sh studentsHandler) getAll(w http.ResponseWriter, r *http.Request) {

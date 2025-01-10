@@ -20,7 +20,7 @@ func RegisterService(r Registration) error {
 	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
-	fmt.Println("registry/client.go: heartbeat handler started")
+	log.Println("registry/client.go: heartbeat handler started")
 	
 	serviceUpdateURL, err := url.Parse(r.ServiceUpdateURL)
 	if err != nil {
@@ -29,11 +29,11 @@ func RegisterService(r Registration) error {
 	// Start listening for the registry service response
 	// Telling the service what other services available
 	http.Handle(serviceUpdateURL.Path, &serviceUpdateHandler{})
-	fmt.Println("registry/client.go: services handler started")
+	log.Println("registry/client.go: services handler started")
 
 	buf := new(bytes.Buffer)
 	enc := json.NewEncoder(buf)
-	fmt.Printf("Registration struct, registry/client.go: %+v\n", r)
+	log.Printf("Registration struct, registry/client.go: %+v\n", r)
 	err = enc.Encode(r)
 	if err != nil {
 		return err
@@ -50,8 +50,8 @@ func RegisterService(r Registration) error {
 		return err
 	}
 	defer res.Body.Close()
-	fmt.Println("Status: ", res.Status)
-	fmt.Println("Body: ", res.Body)
+	log.Println("Status: ", res.Status)
+	log.Println("Body: ", res.Body)
 	if res.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to register service. Registry service responded with code %v", res.StatusCode)
 	}
@@ -73,7 +73,7 @@ func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	fmt.Printf("Update received: %+v\n", p)
+	log.Printf("Update received: %+v\n", p)
 	prov.Update(p)
 }
 
