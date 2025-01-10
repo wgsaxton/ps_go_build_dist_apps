@@ -1,6 +1,6 @@
 apiVersion: v2
 name: registry
-appVersion: "0.05"
+# appVersion: See Parent chart
 description: A Helm chart for Gradebook Registry service
 version: 0.1.0
 type: application

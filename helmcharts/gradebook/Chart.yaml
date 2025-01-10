@@ -1,6 +1,21 @@
 apiVersion: v2
 name: gradebook
-appVersion: "0.06"
+appVersion: "0.07"
 description: A Helm chart for Gradebook
-version: 0.1.2-testing.1
+version: 0.2.0
 type: application
+sources: 
+  - https://github.com/wgsaxton/ps_go_build_dist_apps
+dependencies:
+  - name: registry
+    version: 0.1.0
+    repository: "file://./charts/registry"
+  - name: log
+    version: 0.1.0
+    repository: "file://./charts/logging"
+  - name: grading
+    version: 0.1.0
+    repository: "file://./charts/grading"
+  - name: teacherportal
+    version: 0.1.0
+    repository: "file://./charts/portal"

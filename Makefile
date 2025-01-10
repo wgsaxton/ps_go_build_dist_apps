@@ -31,8 +31,10 @@ build_containers: build_registryservice_container build_logservice_container bui
 build_binaries:
 	app/build.sh
 
-# Do prior: docker login ghcr.io --username wgsaxton
-push_to_registry:
+# Do prior: docker login ghcr.io --username my_github_username
+# See this URL for how to get the proper password (need a token):
+# https://trstringer.com/helm-charts-github-container-registry/
+push_containers_to_registry:
 	docker push ghcr.io/wgsaxton/logservice:${GIT_TAG}
 	docker push ghcr.io/wgsaxton/registryservice:${GIT_TAG}
 	docker push ghcr.io/wgsaxton/gradingservice:${GIT_TAG}
@@ -43,6 +45,8 @@ package_helm_chart:
 	helm package ./gradebook && \
 	popd
 
+# NOTE: This cmd will push ALL the charts in this directory
+# Need to be logged in with "docker login" (see above note) for this to work as well
 push_helm_chart:
 	helm push ./helmcharts/gradebook-* oci://ghcr.io/wgsaxton
 
@@ -50,7 +54,6 @@ push_helm_chart:
 # cluster_name is the name of the kind cluster. Get the name by:
 # kind get clusters
 # Cmd: make load_kind_images cluster_name=my_cluster  // if cluster name is my_cluster
-
 cluster_name = "kind"
 load_kind_images:
 	kind load docker-image ghcr.io/wgsaxton/logservice:${GIT_TAG} --name $(cluster_name)
