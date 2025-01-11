@@ -35,7 +35,7 @@ OR
 helm install dev --version 0.1.2 --namespace gstest --create-namespace oci://ghcr.io/wgsaxton/gradebook
 OR
 # Install from a local packaged chart. Useful for testing locally
-helm install dev --namespace gstest --create-namespace gradebook-0.1.2.tgz
+helm install dev --namespace gstest --create-namespace gradebook-0.2.0.tgz
 ```
 
 Can run this pod in the namespace to do some testing

@@ -17,6 +17,7 @@ func RegisterService(r Registration) error {
 	if err != nil {
 		return err
 	}
+	// Responds to registry service that is checking for a heartbeat
 	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
@@ -27,7 +28,7 @@ func RegisterService(r Registration) error {
 		return err
 	}
 	// Start listening for the registry service response
-	// Telling the service what other services available
+	// Telling the service what other services are available
 	http.Handle(serviceUpdateURL.Path, &serviceUpdateHandler{})
 	log.Println("registry/client.go: services handler started")
 
@@ -39,12 +40,16 @@ func RegisterService(r Registration) error {
 		return err
 	}
 
-	// Give the handler above time to spin up, 5 seconds
-	// Registry couldn't send updates to the service before
+	// Give the "listening for the registry service response" 
+	// handler above time to spin up
+	// Registry couldn't send updates to the log/grading/portal service before
 	time.Sleep(5 * time.Second)
 	log.Println("registry/client.go: sleeping 5 seconds")
 	
-	// Registers its service with the registry
+	// The service (log,grading, portal) registers its service with the registry service
+	// The registry service will immediately send it's response to the serviceUpdateURL
+	// of the service.
+	// started via http.Handle(serviceUpdateURL.Path, &serviceUpdateHandler{}) above.
 	res, err := http.Post(ServicesURL, "application/json", buf)
 	if err != nil {
 		return err
